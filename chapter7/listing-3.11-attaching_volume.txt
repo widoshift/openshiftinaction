@@ -1,0 +1,4 @@
+oc volume dc/app-cli --add --type=persistentVolumeClaim --claim-name=app-cli --mount-path=/opt/app-root/src/uploads
+
+# get information and ensure volume is mounted
+oc describe dc/app-cli

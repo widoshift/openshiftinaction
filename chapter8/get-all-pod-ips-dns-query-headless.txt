@@ -1,0 +1,1 @@
+dig +search +short mongodb-internal.statefulset.svc.cluster.local

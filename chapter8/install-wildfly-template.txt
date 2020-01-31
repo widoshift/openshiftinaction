@@ -1,0 +1,1 @@
+oc create -f https://raw.githubusercontent.com/OpenShiftInAction/chapter8/master/wildfly-template.yaml -n stateful-apps

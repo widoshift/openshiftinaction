@@ -1,0 +1,10 @@
+oc --config ~/admin.kubeconfig create -f pv01.yaml
+oc --config ~/admin.kubeconfig create -f pv02.yaml
+oc --config ~/admin.kubeconfig create -f pv03.yaml
+oc --config ~/admin.kubeconfig create -f pv04.yaml
+oc --config ~/admin.kubeconfig create -f pv05.yaml
+
+#pv0X.yaml are in this zip file
+# alternatively, to do this as a single command:
+
+for i in $(seq 1 5);do oc --config ~/admin.kubeconfig create -f pv0$i.yaml;done

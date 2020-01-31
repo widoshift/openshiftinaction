@@ -1,0 +1,4 @@
+ab \
+-n 50000 \ 
+-c 500 \ 
+http://app-cli-route-image-uploader.apps.192.168.122.101.nip.io/ 

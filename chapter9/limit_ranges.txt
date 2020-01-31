@@ -1,0 +1,35 @@
+# log in as cluster admin user
+oc login -u admin -p admin https://ocp-1.192.168.122.100.nip.io:8443
+
+# create resource limits
+oc create -f core-resource-limits.yaml -n image-uploader
+
+# confirm limit ranges were created
+oc get limitrange -n image-uploader
+
+# create resource quotas
+oc create -f compute-resources.yaml -n image-uploader
+
+# confirm resource quotas were created
+oc get resourcequota -n image-uploader
+
+# create core object counts quota
+oc create -f core-object-counts.yaml -n image-uploader
+
+# confirm new quota was created
+oc get quota -n image-uploader
+
+# For re-creation of pods to have quotas be enforced
+for i in app-cli app-gui;do oc delete pod -l app=$i;done
+
+# Edit app-cli deploymentconfig
+oc edit dc/app-cli
+
+# Edit the resources parameters to reflect the following
+resources:
+  requests:
+    cpu: "750m"
+    memory: "500Mi"
+  limits:
+    cpu: "1"
+    memory: "1000Mi"

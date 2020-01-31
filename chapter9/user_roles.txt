@@ -1,0 +1,14 @@
+#give the developer user edit rights to image-uploader project
+oadm policy add-role-to-user edit developer -n image-uploader
+
+# make project-admin user an admin to image-uploader project-admin
+oadm policy add-role-to-user admin project-admin
+
+# make admin user a cluster admin
+oadm policy add-cluster-role-to-user cluster-admin admin
+
+# give all users edit access to image-uploader project
+oadm policy add-role-to-group edit -n image-uploader system:authenticated
+
+# create user1 user to test new default role
+echo user1 | htpasswd --stdin /etc/origin/master/openshift.htpasswd user1

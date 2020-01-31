@@ -1,0 +1,1 @@
+curl -o /dev/null --cookie-jar cookies.txt $(oc get route wildfly-app -o=jsonpath='{.spec.host}')/rest/serverdata/ip

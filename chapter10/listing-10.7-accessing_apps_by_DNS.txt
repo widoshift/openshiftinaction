@@ -1,0 +1,2 @@
+# accessing app-cli application using its service DNS entry 
+curl app-cli.image-uploader.svc.cluster.local:8080

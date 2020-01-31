@@ -1,0 +1,1 @@
+oc describe hpa app-cli

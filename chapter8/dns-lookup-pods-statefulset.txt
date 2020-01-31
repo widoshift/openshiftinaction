@@ -1,0 +1,4 @@
+for statefulpod in $(oc get pods -l name=mongodb -o=jsonpath='{.items[*].metadata.name}'); \
+   do \
+       dig +short $statefulpod.mongodb-internal.statefulset.svc.cluster.local; \
+   done

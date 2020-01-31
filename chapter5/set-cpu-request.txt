@@ -1,0 +1,1 @@
+oc set resources dc app-cli --requests=cpu=400m

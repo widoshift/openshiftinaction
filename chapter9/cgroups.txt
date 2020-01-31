@@ -1,0 +1,8 @@
+# use docker to get the cgroup slice a container is configured to use
+# you'll need to replace '80366fd64c36' with your container short ID
+
+docker inspect -f '{{ .HostConfig.CgroupParent }}' 80366fd64c36
+
+# start an interactive bash session inside your app-cli container
+
+docker run -it 80366fd6 bash

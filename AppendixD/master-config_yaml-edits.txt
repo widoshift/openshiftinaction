@@ -1,0 +1,16 @@
+# edit /etc/origin/master/master-config.yaml as follows:
+# for the `identityProviders` section
+
+identityProviders:
+- name: my_htpasswd_provider
+  challenge: true
+  login: true
+  mappingMethod: claim
+  provider:
+    apiVersion: v1
+    kind: HTPasswdPasswordIdentityProvider
+    file: /etc/origin/master/openshift.htpasswd
+
+# After editing the file, restart the origin-master service
+
+systemctl restart origin-master

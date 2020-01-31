@@ -1,0 +1,4 @@
+# Show node a pod is deployed to with oc output 
+# -o wide: show wide output, including node pod is deployed to
+# --show-all=false: show only running pods, not pods in a completed or error state
+oc get pods -o wide -n image-uploader --show-all=false

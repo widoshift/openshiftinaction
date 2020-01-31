@@ -1,0 +1,28 @@
+# use docker to determine the LV for the app-cli container
+# replace `fae8e211e7a7` with the container ID for your app-cli deployment
+# example output: docker-253:1-10125-8bd64caed0421039e83ee4f1cdcbcf2...
+
+docker inspect -f '{{ .GraphDriver.Data.DeviceName }}' fae8e211e7a7
+
+# this lv shows up in `lsblk`, but its mount point isn't visible in the default system namespace. You have to enter the docker daemon's mount namespace to view the mount point.
+
+nsenter -t $(pidof dockerd-current) -m
+
+# search for the mount point for the LV created for your app-cli container
+# example output: .../var/lib/docker/devicemapper/mnt/8bd64cae...
+
+mount | grep docker-253:1-10125-8bd64cae
+
+# view the root filesystem content for the app-cli container
+# example output:
+# total 32
+# -rw-r--r--.  1 root root 15759 Aug  1 17:24 anaconda-post.log
+# lrwxrwxrwx.  1 root root     7 Aug  1 17:23 bin -> usr/bin
+# drwxr-xr-x.  3 root root    18 Sep 14 22:18 boot
+# drwxr-xr-x.  4 root root    43 Sep 21 23:19 dev
+# drwxr-xr-x. 53 root root  4096 Sep 21 23:19 etc
+# -rw-r--r--.  1 root root  7388 Sep 14 22:16 help.1
+# drwxr-xr-x.  2 root root     6 Nov  5  2016 home
+# ...
+
+ls -al /var/lib/docker/devicemapper/mnt/8bd4cae.../rootfs 

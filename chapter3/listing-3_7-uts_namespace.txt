@@ -1,0 +1,27 @@
+# confirms that the UTS namespace provides a unique hostname for each container
+# replace container short ID (fae8e211e7a7) with the ID for your app-cli container
+
+docker exec fae8e211e7a7 hostname
+
+# log in to OpenShift to confirm the hostname is the same as the pod name and that each container is unique
+
+oc login -u developer -p developer https://ocp1.192.168.122.100.nip.io:8443
+
+# scale app-cli to 2 pods
+
+oc scale dc/app-cli --replicas=2
+
+# get pod names for app-cli, limiting output to active pods
+# example output:
+# NAME              READY     STATUS    RESTARTS   AGE
+# app-cli-4-18k2s   1/1       Running   1          5d
+# app-cli-4-9hsz1   1/1       Running   0          42m
+# app-gui-2-l65d9   1/1       Running   1          5d
+
+oc get pods --show-all=false
+
+# Use oc exec to run a command inside the running container for each pod, abstracting out docker
+# replace the pod name with your own
+# run for each active app-cli pod and confirm each one has a unique hostname
+
+oc exec app-cli-4-9hsz1 hostname

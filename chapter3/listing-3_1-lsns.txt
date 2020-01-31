@@ -1,0 +1,2 @@
+# replace the PID (4470) with your app-cli container PID to see all of its active namespaces 
+lsns -p 4470

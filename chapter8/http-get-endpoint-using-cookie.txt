@@ -1,0 +1,7 @@
+for I in $(seq 1 8); \
+  do \
+      curl -s \
+      --cookie cookies.txt \ 
+      "$(oc get route wildfly-app -o=jsonpath='{.spec.host}')/rest/serverdata/ip"; \
+      printf "\n"; \
+  done

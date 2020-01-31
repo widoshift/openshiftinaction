@@ -1,0 +1,4 @@
+oc get pods
+#this will output your active pods. you'll need the running pod for app-cli-1-$SOME_HASH
+oc delete pod $POD_NAME
+# your pod name will be unique. please substitute it here.

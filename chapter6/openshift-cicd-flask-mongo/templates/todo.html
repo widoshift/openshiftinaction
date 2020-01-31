@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Task Manager</title>
+
+    <!-- CSS -->
+    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename='css/jumbotron-narrow.css') }}" rel="stylesheet">
+
+    <!-- JS -->
+    <script src="{{ url_for('static',filename='js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/todo.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootbox-4.4.js') }}"></script>
+
+  </head>
+
+    <div class="container">
+      <div class="header clearfix">
+        <h4 class="text-muted pull-right">Powered by OpenShift</h4>
+        <h4 class="text-muted pull-left">Bootstrap/Python/Flask/Mongo</h4>
+      </div>
+
+      <div class="well well-sm" style="margin: 3rem;">
+  <h1 class="text-center">My ToDo Application</h1>
+</div>
+{% if style == "usebuttons" %}
+    <table id='todotable' class="table" data-style='usebuttons' >
+{% else %}
+    <table id='todotable' class="table">
+{% endif %}
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Priority</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody id="table">
+    <tr>
+      <td>
+        <input type="text" class="form-control" id="task">
+      </td>
+      <td>
+        <select class="form-control" id="priority">
+      <option>Low</option>
+      <option>Medium</option>
+      <option>High</option>
+      <option>Critical</option>
+    </select>
+      </td>
+      <td>
+        {% if style == "usebuttons" %}
+            <button type="button" id="add-button" class="btn btn-primary glyphicon glyphicon-save"></button>
+        {% else %}
+            <button type="button" id="add-button" class="btn btn-primary">Add</button>
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+      <footer class="footer">
+        <p>OpenShift In Action</p>
+      </footer>
+
+    </div> <!-- /container -->
+  </body>
+</html>

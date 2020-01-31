@@ -1,0 +1,4 @@
+oc create -f pvc-app-cli.yaml
+oc get pvcoc get pvc
+
+#pvc-app-cli.yaml is in this zip file

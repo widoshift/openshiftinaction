@@ -1,0 +1,6 @@
+ansible-playbook -i /root/.config/openshift/hosts \
+  /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-metrics.yml \
+   -e openshift_metrics_install_metrics=True \
+   -e openshift_metrics_start_cluster=True \
+   -e openshift_metrics_duration=1 \
+   -e openshift_metrics_hawkular_hostname=hawkular-metrics.apps.192.168.122.101.nip.io

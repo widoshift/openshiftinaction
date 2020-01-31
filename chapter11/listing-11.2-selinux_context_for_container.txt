@@ -1,0 +1,7 @@
+# get container PID by docker ID
+docker inspect -f '{{ .State.Pid }}' <CONTAINER_DOCKER_ID>
+
+# view SELinux context for container process by PID 
+ps -axZ | grep <PID>
+
+

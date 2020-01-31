@@ -1,0 +1,1 @@
+oc logs -f $(oc get pods -l app=graceful -o=jsonpath='{.items[].metadata.name}')

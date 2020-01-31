@@ -1,0 +1,111 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: image-scan-template
+  annotations:
+    openshift.io/display-name: An OpenSCAP Image Scanner (Ephemeral)
+    description: |-
+      An Image Inspect template to scan container images
+
+      WARNING: Any data stored will be lost upon pod destruction. Only use this template for testing.
+      tags: quickstart
+    iconClass: icon-shadowman
+objects:
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    annotations:
+      openshift.io/scc: privileged
+    labels:
+      app: "${APPLICATION_NAME}"
+    name: "${APPLICATION_NAME}"
+  spec:
+    replicas: 1
+    selector:
+      app: "${APPLICATION_NAME}"
+      deploymentconfig: "${APPLICATION_NAME}"
+    strategy:
+      type: Recreate
+    triggers:
+    - type: ConfigChange
+    template:
+      metadata:
+        labels:
+          app: "${APPLICATION_NAME}"
+          deploymentconfig: "${APPLICATION_NAME}"
+      spec:
+        serviceAccount: ${SERVICE_ACCOUNT}
+        serviceAccountName: ${SERVICE_ACCOUNT}
+        containers:
+          - name: "${APPLICATION_NAME}"
+            image: ${IMAGE_INSPECTOR_URL}
+            command: [ "/usr/bin/image-inspector"]
+            args:
+              - "--image"
+              - "${IMAGE_TO_SCAN_URL}"
+              - "--path"
+              - "/tmp/image-content"
+              - "--serve"
+              - "0.0.0.0:8080"
+              - "--chroot"
+              - "--scan-type"
+              - "${SCAN_TYPE}"
+              - "--scan-results-dir"
+              - "/tmp/image-content"
+              - "--openscap-html-report"
+              - "--dockercfg"
+              - "/tmp/registry/.dockercfg"
+            ports:
+              - containerPort: 8080
+            env:
+            - name: IMAGE_TO_SCAN_URL
+              value: "${IMAGE_TO_SCAN_URL}"
+
+            volumeMounts:
+                # name must match the volume name below
+                - name: docker-registry
+                  mountPath: /tmp/registry
+                  readOnly: true
+                - name: docker-socket
+                  mountPath: /var/run/docker.sock
+            securityContext:
+                privileged: true
+        volumes:
+          - name: docker-registry
+            secret:
+              secretName: ${DOCKERCFG_SECRET}
+          - name: docker-socket
+            hostPath:
+               path: /var/run/docker.sock
+        restartPolicy: Always
+parameters:
+- name: APPLICATION_NAME
+  displayName: Application Name
+  description: The name assigned to all of the frontend objects defined in this template.
+  value: image-inspector
+  required: true
+- name: IMAGE_INSPECTOR_URL
+  displayName: Container Image that is doing the scans
+  description: The image inspector image, defaults to CentOS, for RHEL use registry.access.redhat.com/openshift3/image-inspector:latest
+  value: docker.io/openshift/image-inspector:latest
+  required: true
+- name: IMAGE_TO_SCAN_URL
+  displayName: Image URL to scan with OpenSCAP
+  description: The image getting scanned with OpenSCAP
+  value: registry.access.redhat.com/rhel7:7.0-21
+  required: true
+- name: SCAN_TYPE
+  displayName: Scan Type
+  description: Type of scan you want image-inspect to run
+  value: openscap
+  required: true
+- name: DOCKERCFG_SECRET
+  displayName: dockercfg Secret
+  description: This is the name of a pre-existing dockercfg secret with credentials to access the registry
+  required: true
+- name: SERVICE_ACCOUNT
+  displayName: Service Account
+  description: The Service Account to run the pod as
+  value: default
+  required: true

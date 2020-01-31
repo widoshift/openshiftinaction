@@ -1,0 +1,1 @@
+oc scale dc/wildfly-app --replicas=2

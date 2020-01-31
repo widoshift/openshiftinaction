@@ -1,0 +1,2 @@
+# your app-cli container ID should replace the example below (f3cce9147cd1)
+docker exec -it f3cce9147cd1 bash

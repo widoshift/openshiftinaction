@@ -1,0 +1,13 @@
+# look for processes listening on port 80 on a node
+netstat -tpl --numeric-ports | grep 80
+
+# list namespaces for HAProxy pod by PID 
+lsns -p <PID>
+
+# connecting to the router pod using oc
+oc rsh <ROUTER_POD_NAME>
+
+# examining HAProxy config and searching for app-cli entries from inside the router pod
+grep app-cli /var/lib/haproxy/conf/haproxy.config
+
+

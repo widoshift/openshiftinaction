@@ -1,0 +1,4 @@
+oc autoscale dc/app-cli \
+--min 2 \
+--max 5 \
+--cpu-percent=80

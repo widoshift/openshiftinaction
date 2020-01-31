@@ -1,0 +1,14 @@
+# view SELinux context for file (openvswitch socket)
+ls -alZ /var/run/openvswitch/db.sock
+
+# viewing extended file attributes for file 
+# this is wher the SELinux context is stored 
+getfattr -d -m - /var/run/openvswitch/db.sock
+
+# viewing SELinux contexts related to openvswitch 
+semanage fcontext -l | grep openvswitch
+
+# confirming the enforcing status of SELinux 
+getenforce
+
+

@@ -1,0 +1,1 @@
+oc scale statefulsets mongodb --replicas=3

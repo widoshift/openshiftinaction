@@ -1,0 +1,2 @@
+# Your app-cli container ID from `docker ps` should 
+docker inspect -f '{{ .State.Pid }}' fae8e211e7a7

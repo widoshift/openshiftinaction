@@ -1,0 +1,3 @@
+oc create \
+ -f https://raw.githubusercontent.com/OpenShiftInAction/chapter8/master/statefulsets/mongodb-statefulset-replication-emptydir.yaml \
+ -n statefulset

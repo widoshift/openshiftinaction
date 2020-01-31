@@ -1,0 +1,69 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: scan-me-template
+  annotations:
+    openshift.io/display-name: Simple template with a DC
+    description: |-
+      This is a simple template which creates a DC for an image and runs a basic command as the entrypoint
+
+      WARNING: Any data stored will be lost upon pod destruction. Only use this template for testing.
+      tags: quickstart
+    iconClass: icon-shadowman
+objects:
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    labels:
+      app: "${APPLICATION_NAME}"
+    name: "${APPLICATION_NAME}"
+  spec:
+    replicas: 1
+    selector:
+      app: "${APPLICATION_NAME}"
+      deploymentconfig: "${APPLICATION_NAME}"
+    strategy:
+      type: Recreate
+    triggers:
+    - type: ConfigChange
+    template:
+      metadata:
+        labels:
+          app: "${APPLICATION_NAME}"
+          deploymentconfig: "${APPLICATION_NAME}"
+      spec:
+        containers:
+          - name: "${APPLICATION_NAME}"
+            image: ${IMAGE_URL}
+            command: [ "${CMD}"]
+            args:
+              - "${ARG1}"
+              - "${ARG2}"
+        restartPolicy: Always
+parameters:
+- name: APPLICATION_NAME
+  displayName: Application Name
+  description: The name assigned to all of the frontend objects defined in this template.
+  value: scan-me
+  required: true
+- name: IMAGE_URL
+  displayName: Image URL
+  description: Full path to the Image URL
+  value: registry.access.redhat.com/rhel7:7.0-21
+  required: true
+- name: CMD
+  displayName: Command
+  description: Command to run in the template
+  value: /usr/bin/tail
+  required: true
+- name: ARG1
+  displayName: Argument 1
+  description: First argument to the CMD
+  value: -f
+  required: false
+- name: ARG2
+  displayName: Argument 2
+  description: Second argument to the CMD
+  value: /etc/redhat-release
+  required: false

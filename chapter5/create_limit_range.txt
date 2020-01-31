@@ -1,0 +1,1 @@
+oc create -f ch5-limit-range.json -n image-uploader

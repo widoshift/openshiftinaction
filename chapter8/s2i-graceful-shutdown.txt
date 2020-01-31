@@ -1,0 +1,1 @@
+oc new-app -l app=graceful --context-dir=dockerfile-graceful-shutdown https://github.com/OpenShiftInAction/chapter8

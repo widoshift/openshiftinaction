@@ -1,0 +1,28 @@
+# output on the appication node for the PID for the app-cli container
+# replace the PID (4470) with the PID for your app-cli container that was obtained using the information in appendix c
+# example output
+#   PID TTY          TIME CMD
+#  4506 ?        00:00:00 cat
+#  4510 ?        00:00:01 cat
+#  4542 ?        00:02:55 httpd
+#  4544 ?        00:03:01 httpd
+#  4548 ?        00:03:01 httpd
+#  4565 ?        00:03:01 httpd
+#  4568 ?        00:03:01 httpd
+
+ps --ppid 4470
+
+# run the ps command from inside the container, from inside its PID namespace using `oc exec`
+# replace the pod name (app-cli-4-18k2s) with the pod name for your app-cli pod
+# example output:
+#   PID TTY          TIME CMD
+#     1 ?        00:00:27 httpd
+#    18 ?        00:00:00 cat
+#    19 ?        00:00:01 cat
+#    20 ?        00:02:55 httpd
+#    22 ?        00:03:00 httpd
+#    26 ?        00:03:00 httpd
+#    43 ?        00:03:00 httpd
+#    46 ?        00:03:01 httpd
+
+oc exec app-cli-4-18k2s ps

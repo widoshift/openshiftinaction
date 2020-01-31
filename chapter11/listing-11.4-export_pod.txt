@@ -1,0 +1,2 @@
+# export app-gui pod and search for MCS level 
+oc export pod <POD_NAME> | grep -A 1 seLinuxOptions

@@ -1,0 +1,27 @@
+# image scanner steps:
+# 1. create new project 
+# 2. create template 
+# 3. get image ID for wildfly-app to scan 
+# 4. set default SCC for image-scan project to privileged 
+# 5. run scan against wildfly-app image  
+# 6. get scan results 
+# 7. annotate wildfly-app image because issues were found
+#    the annotation will prevent new pods from being deployed using this image
+oc new-project image-scan
+
+oc create -f https://raw.githubusercontent.com/OpenShiftInAction/chapter11/master/image-scanner/templates/image-scanner.yaml -n image-scan
+
+oc describe dc/wildfly-app -n stateful-apps | grep Image:
+
+oc adm policy add-scc-to-user privileged -z default -n image-scan
+
+oc new-app --template=image-scan/image-scan-template \
+-p DOCKERCFG_SECRET=$(oc get secrets -o jsonpath='{ .items[*].metadata.name}' | xargs -n1 | grep 'default-dockercfg*') \
+-p IMAGE_TO_SCAN_URL=<WILDFLY_IMAGE_ID>
+
+oc rsync image-inspector-1-xmlkb:/tmp/image-content/results.html .
+
+oc annotate image <WILDFLY_APP_IMAGE_ID> images.openshift.io/deny-execution=true
+
+
+

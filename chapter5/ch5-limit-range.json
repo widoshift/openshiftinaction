@@ -1,0 +1,22 @@
+{
+    "kind": "LimitRange",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "ch5-limitrange"
+    },
+    "spec": {
+        "limits": [
+            {
+                "type": "Pod",
+                "max": {
+                    "cpu": "500m",
+                    "memory": "500Mi" 
+                },
+                "min": {
+                    "cpu": "25m", 
+                    "memory": "5Mi" 
+                }
+            }
+        ]
+    }
+}

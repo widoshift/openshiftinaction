@@ -1,0 +1,10 @@
+# ensure ovs is enabled and running 
+systemctl status ovs-vswitchd
+
+# list all ovs-controlled bridges
+ovs-vsctl list-br
+
+# list all interfaces on br0 ovs device 
+ovs-vsctl list-ifaces br0
+
+

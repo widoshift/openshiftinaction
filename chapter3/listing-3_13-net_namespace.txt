@@ -1,0 +1,3 @@
+# repace the PID (5136) with the PID for your app-cli container on the application node 
+
+nsenter -t 5136 -n /sbin/ip a

@@ -1,0 +1,13 @@
+# search mounted volumes for nfs mounts
+mount | grep nfs
+
+# example output - note the 'pv01' in the path. this is the physical volume that is mounted
+#192.168.122.100:/var/nfs-data/pv01 on /var/lib/origin/openshift.local.volumes/pods/45e4431b-9f1d-11e7-8afe-001cc4000001/volumes/kubernetes.io~nfs/pv01 type nfs4 ...
+
+# get the list of pvcs from OpenShift
+oc get pvc
+
+# example output - pv01 is mapped to the pvc for app-cli
+# NAME      STATUS    VOLUME    CAPACITY   ACCESSMODES   STORAGECLASS   AGE
+# app-cli   Bound     pv01      2Gi        RWX                          2d
+# app-gui   Bound     pv03      2Gi        RWX                          2d
