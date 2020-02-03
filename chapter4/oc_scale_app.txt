@@ -1,1 +1,0 @@
-oc scale dc app-cli-1 --replicas=1
